@@ -1,0 +1,26 @@
+---
+# from: https://signal.org/download/
+
+- name: Download foo.conf
+  ansible.builtin.get_url:
+    url: "{{ download_url }}"
+    dest: "{{ destination }}"
+  become: true
+
+- name: gpg dearmor
+  ansible.builtin.shell: "cat {{ destination }} | gpg --dearmor > {{ creates }}"
+  args:
+    creates: "{{ creates }}"
+  become: true
+
+- name: apt source
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main"
+    state: present
+    filename: signal-desktop
+  become: true
+
+- name: Install Signal Desktop
+  ansible.builtin.apt:
+    name: signal-desktop
+    state: present

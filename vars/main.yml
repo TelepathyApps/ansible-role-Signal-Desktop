@@ -1,0 +1,10 @@
+---
+# vars file for Signal-Desktop
+
+download_url: https://updates.signal.org/desktop/apt/keys.asc
+#https://torrent.fedoraproject.org/torrents/Fedora-Workstation-Live-x86_64-40.torrent
+
+destination: /etc/apt/keyrings/signal-desktop.asc
+#"{{ansible_env.HOME}}/Downloads/Fedora-Workstation-Live-x86_64-40.torrent"
+
+creates: /usr/share/keyrings/signal-desktop-keyring.gpg
